@@ -2,7 +2,7 @@
 import argparse
 from urllib.parse import urljoin
 
-from pyebu.utils import get_soup
+from pyfroot.utils import get_soup
 
 
 
@@ -42,6 +42,7 @@ def main():
 	items = container.select(items_selector)
 
 	def get_article_content(full_url):
+		return "Foo Faa"
 		article_soup = get_soup(full_url)
 		article_selector = " ".join(args.article)
 		article_content = article_soup.select_one(article_selector)
