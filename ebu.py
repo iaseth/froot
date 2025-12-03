@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+from urllib.parse import urljoin
 
 from pyebu.utils import get_soup
 
@@ -40,6 +41,12 @@ def main():
 	items_selector = " ".join(args.items) if args.items else "a"
 	items = container.select(items_selector)
 
+	def get_article_content(full_url):
+		article_soup = get_soup(full_url)
+		article_selector = " ".join(args.article)
+		article_content = article_soup.select_one(article_selector)
+		return article_content
+
 	for i, item in enumerate(items, start=1):
 		if item.name == 'a':
 			a = item
@@ -50,8 +57,12 @@ def main():
 				a = a.find("a")
 		else:
 			a = item.find("a")
-		print(f"{i}. {a['href']}")
-		# break
+
+		full_url = urljoin(args.url, a['href'])
+		print(f"{i}. {full_url}")
+		article_content = get_article_content(full_url)
+		print(article_content)
+		break
 
 
 if __name__ == '__main__':
