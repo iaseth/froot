@@ -9,6 +9,8 @@ class FrootBook:
 		self.app = app
 		self.uuid = create_uuid()
 		self.chapters = []
+		self.title = "The Book of Froot"
+		self.author = "Froot"
 
 	@property
 	def length(self):

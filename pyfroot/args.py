@@ -15,7 +15,8 @@ def get_args():
 	parser.add_argument("--page-start", type=int, default=1, help="First page number to process")
 	parser.add_argument("--page-end", type=int, default=1, help="Last page number to process")
 
-	parser.add_argument("-t", "--title", help="Optional title", default=None)
+	parser.add_argument("--title", help="Optional title", default=None)
+	parser.add_argument("--author", help="Optional author", default=None)
 	parser.add_argument("-d", "--description", help="Optional description", default=None)
 
 	parser.add_argument("--debug", "-z", action='store_true', help="Turn on debug mode", default=False)

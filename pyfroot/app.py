@@ -26,6 +26,22 @@ class FrootApp:
 	def download(self):
 		self.debug(froot.args)
 		soup = get_soup(self.root_url)
+
+		if self.args.title:
+			self.book.title = self.args.title
+		else:
+			title_tag = soup.find("title")
+			if title_tag:
+				self.book.title = title_tag.text.strip()
+
+		if self.args.author:
+			self.book.author = self.args.author
+		else:
+			meta_tag = soup.find("meta", attrs={"property": "og:site_name"})
+			meta_tag = meta_tag or soup.find("meta", attrs={"name": "twitter:site"})
+			if meta_tag:
+				self.book.author = meta_tag['content'].strip()
+
 		container = soup.select_one(self.container_selector)
 		items = container.select(self.items_selector)
 
@@ -48,6 +64,8 @@ class FrootApp:
 
 	def export_book_as_epub(self):
 		self.book.export_epub()
+		self.debug(f"\t--- Title: {self.book.title}")
+		self.debug(f"\t--- Author: {self.book.author}")
 
 	def get_full_url(self, href):
 			return urljoin(self.root_url, href)
