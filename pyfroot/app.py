@@ -1,7 +1,7 @@
 from urllib.parse import urljoin
 
 from .args import get_args
-from .utils import get_soup
+from .utils import create_uuid, get_soup
 from .bookit import FrootBook
 
 
@@ -10,6 +10,7 @@ class FrootApp:
 	def __init__(self):
 		self.args = get_args()
 		self.root_url = self.args.url
+		self.uuid = create_uuid()
 
 		self.container_selector = " ".join(self.args.container)
 		self.items_selector = " ".join(self.args.items) if self.args.items else "a"

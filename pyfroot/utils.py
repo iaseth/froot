@@ -1,9 +1,15 @@
+import uuid
+
 import requests
 from bs4 import BeautifulSoup
 
 
+
 session = requests.session()
 
+
+def create_uuid():
+	return str(uuid.uuid4())
 
 def get_page(url: str):
 	response = session.get(url)

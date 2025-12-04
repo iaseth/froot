@@ -1,10 +1,12 @@
 from .chapter import FrootChapter
+from ..utils import create_uuid
 
 
 
 class FrootBook:
 	def __init__(self, app):
 		self.app = app
+		self.uuid = create_uuid()
 		self.chapters = []
 
 	def create_chapter(self, a_tag):
