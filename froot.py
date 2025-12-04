@@ -4,7 +4,6 @@ from pyfroot import froot
 
 
 def main():
-	froot.debug(froot.args)
 	froot.download()
 
 
