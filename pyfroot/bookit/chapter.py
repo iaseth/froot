@@ -31,6 +31,9 @@ class FrootChapter:
 
 	def get_content(self):
 		soup = self.app.get_article_content_soup(self.full_url)
+		if not soup:
+			return "No content found!"
+
 		for tag_name in BAD_TAGS:
 			for tag in soup.find_all(tag_name):
 				tag.decompose()

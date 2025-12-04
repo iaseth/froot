@@ -21,10 +21,10 @@ class FrootApp:
 
 	def debug(self, *nargs, **kwargs):
 		if self.args.debug:
-			print(nargs, kwargs)
+			print(*nargs, **kwargs)
 
 	def download(self):
-		froot.debug(froot.args)
+		self.debug(froot.args)
 		soup = get_soup(self.root_url)
 		container = soup.select_one(self.container_selector)
 		items = container.select(self.items_selector)
@@ -44,7 +44,7 @@ class FrootApp:
 
 			self.book.create_chapter(a_tag)
 			# break
-		self.book.print_toc()
+		# self.book.print_toc()
 
 	def export_book_as_epub(self):
 		self.book.export_epub()
@@ -53,6 +53,7 @@ class FrootApp:
 			return urljoin(self.root_url, href)
 
 	def get_article_content_soup(self, full_url):
+		self.debug(f"\t--- Fetching {full_url} . . .")
 		article_soup = get_soup(full_url)
 		article_content = article_soup.select_one(self.article_selector)
 		return article_content
