@@ -71,3 +71,10 @@ Thumbs.db
 *.tgz
 *.lock-wscript
 
+*.lock-wscript
+
+temp_epub
+*.epub
+*.mobi
+*.azw3
+*.pdf
