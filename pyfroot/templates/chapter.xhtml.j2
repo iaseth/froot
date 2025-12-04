@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title>{{ page_title }}</title>
+		<title>{{ chapter.title }}</title>
 	</head>
 	<body>
-		{{ content | safe }}
+		{{ chapter.get_content() | safe }}
 	</body>
 </html>

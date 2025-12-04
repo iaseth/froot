@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
 	<head>
-		<meta name="dtb:uid" content="{{ uid }}"/>
+		<meta name="dtb:uid" content="{{ book.uuid }}"/>
 		<meta name="dtb:depth" content="1"/>
 	</head>
 	<docTitle><text>{{ title }}</text></docTitle>
@@ -11,9 +11,9 @@
 			<content src="inline_toc.xhtml"/>
 		</navPoint>
 
-		{% for i, chapter in enumerate(chapters) %}
+		{% for i, chapter in enumerate(book.chapters) %}
 		<navPoint id="navPoint-{{ i+1 }}" playOrder="{{ i+1 }}">
-			<navLabel><text>{{ chapter.get_title() }}</text></navLabel>
+			<navLabel><text>{{ chapter.title }}</text></navLabel>
 			<content src="{{ chapter.output_filepath }}"/>
 		</navPoint>
 		{% endfor %}

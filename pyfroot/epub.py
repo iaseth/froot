@@ -37,7 +37,7 @@ def render_template(name, **kwargs):
 	return env.get_template(name).render(**kwargs)
 
 
-def create_epub_from_book(book, output_filename="fruit.epub", title="The Book of Froot", author="John Smith"):
+def create_epub_from_book(book, output_filename="froot.epub", title="The Book of Froot", author="John Smith"):
 	temp_dir = Path("temp_epub")
 	create_epub_structure(temp_dir)
 	oebps_dir = temp_dir / "OEBPS"

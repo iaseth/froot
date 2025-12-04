@@ -7,9 +7,9 @@
 	<body>
 		<h2>{{ page_title }}</h2>
 		<ul>
-			{% for chapter in chapters %}
+			{% for chapter in book.chapters %}
 			<li>
-				<a href="{{ chapter.output_filepath }}">{{ chapter.get_title() }}</a>
+				<a href="{{ chapter.output_filepath }}">{{ chapter.title }}</a>
 			</li>
 			{% endfor %}
 		</ul>
