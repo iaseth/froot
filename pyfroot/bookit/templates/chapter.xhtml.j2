@@ -25,7 +25,12 @@
 				<span>&bull; <a href="{{ book.last_chapter.output_filename }}">Last</a></span>
 				{% endif %}
 			</h4>
+
 			<h1>{{ chapter.title }}</h1>
+
+			{% if chapter.full_url %}
+			<h4>{{ chapter.full_url }}</h4>
+			{% endif %}
 		</header>
 		<article>
 		{{ chapter.get_content() | safe }}

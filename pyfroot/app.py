@@ -29,6 +29,9 @@ class FrootApp:
 		container = soup.select_one(self.container_selector)
 		items = container.select(self.items_selector)
 
+		if self.args.limit:
+			items = items[:self.args.limit]
+
 		for i, item in enumerate(items, start=1):
 			if item.name == 'a':
 				a_tag = item
@@ -40,7 +43,6 @@ class FrootApp:
 				a_tag = item.find("a")
 
 			self.book.create_chapter(a_tag)
-			# article_content = self.get_article_content(full_url)
 			# break
 		self.book.print_toc()
 

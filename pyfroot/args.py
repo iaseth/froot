@@ -11,6 +11,7 @@ def get_args():
 	parser.add_argument("-l", "--link", nargs="+", metavar="SELECTOR", help="CSS selectors for listing item link")
 	parser.add_argument("-a", "--article", nargs="+", metavar="SELECTOR", help="CSS selectors for article content")
 
+	parser.add_argument("--limit", "-n", type=int, default=0, help="Limit number of chapters")
 	parser.add_argument("--page-start", type=int, default=1, help="First page number to process")
 	parser.add_argument("--page-end", type=int, default=1, help="Last page number to process")
 

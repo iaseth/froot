@@ -28,7 +28,7 @@ class FrootChapter:
 		return os.path.join("texts", self.output_filename)
 
 	def get_content(self):
-		return "Foo is a Faa."
+		return self.app.get_article_content(self.full_url)
 
 	def __str__(self):
 		return f"Chapter - {self.title} ({self.href})"
