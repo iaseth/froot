@@ -52,7 +52,7 @@ class FrootApp:
 	def get_full_url(self, href):
 			return urljoin(self.root_url, href)
 
-	def get_article_content(self, full_url):
+	def get_article_content_soup(self, full_url):
 		article_soup = get_soup(full_url)
 		article_content = article_soup.select_one(self.article_selector)
 		return article_content
