@@ -13,10 +13,10 @@ class FrootApp:
 		self.uuid = create_uuid()
 		self.epub_filepath = self.args.output or "epubs/froot.epub"
 
-		self.container_selector = " ".join(self.args.container)
+		self.container_selector = " ".join(self.args.container) if self.args.container else None
 		self.items_selector = " ".join(self.args.items) if self.args.items else "a"
-		self.article_selector = " ".join(self.args.article)
 		self.link_selector = " ".join(self.args.link) if self.args.link else "a"
+		self.article_selector = " ".join(self.args.article)
 
 		self.book = FrootBook(self)
 
@@ -43,7 +43,11 @@ class FrootApp:
 			if meta_tag:
 				self.book.author = meta_tag['content'].strip()
 
-		container = soup.select_one(self.container_selector)
+		body = soup.find("body")
+		if self.container_selector:
+			container = soup.select_one(self.container_selector)
+		else:
+			container = body
 		items = container.select(self.items_selector)
 
 		if self.args.limit:
@@ -64,10 +68,13 @@ class FrootApp:
 		# self.book.print_toc()
 
 	def export_book_as_epub(self):
-		self.book.export_epub(epub_filepath=self.epub_filepath)
-		self.debug(f"\t--- Title: {self.book.title}")
-		self.debug(f"\t--- Author: {self.book.author}")
-		self.debug(f"\t--- EPUB: {self.epub_filepath}")
+		if self.book.chapters:
+			self.book.export_epub(epub_filepath=self.epub_filepath)
+			self.debug(f"\t--- Title: {self.book.title}")
+			self.debug(f"\t--- Author: {self.book.author}")
+			self.debug(f"\t--- EPUB: {self.epub_filepath}")
+		else:
+			print(f"\t--- Not found any chapters!")
 
 	def get_full_url(self, href):
 			return urljoin(self.root_url, href)
