@@ -2,7 +2,6 @@ from urllib.parse import urljoin
 
 from .args import get_args
 from .bookit import FrootBook
-from .epub import create_epub_from_book
 from .utils import create_uuid, get_soup
 
 
@@ -45,8 +44,8 @@ class FrootApp:
 			# break
 		self.book.print_toc()
 
-	def create_epub(self):
-		create_epub_from_book(self.book)
+	def export_book_as_epub(self):
+		self.book.export_epub()
 
 	def get_full_url(self, href):
 			return urljoin(self.root_url, href)

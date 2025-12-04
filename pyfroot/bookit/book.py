@@ -1,4 +1,5 @@
 from .chapter import FrootChapter
+from .epub import create_epub_from_book
 from ..utils import create_uuid
 
 
@@ -32,5 +33,8 @@ class FrootBook:
 	def print_toc(self):
 		for i, chapter in enumerate(self.chapters, start=1):
 			print(f"{i}. {chapter}")
+
+	def export_epub(self):
+		create_epub_from_book(self)
 
 
