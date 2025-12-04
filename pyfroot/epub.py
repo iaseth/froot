@@ -37,7 +37,7 @@ def render_template(name, **kwargs):
 	return env.get_template(name).render(**kwargs)
 
 
-def create_epub_from_book(book, output_filename="froot.epub", title="The Book of Froot", author="John Smith"):
+def create_epub_from_book(book, epub_filepath="epubs/froot.epub", title="The Book of Froot", author="John Smith"):
 	temp_dir = Path("temp_epub")
 	create_epub_structure(temp_dir)
 	oebps_dir = temp_dir / "OEBPS"
@@ -77,7 +77,7 @@ def create_epub_from_book(book, output_filename="froot.epub", title="The Book of
 		f.write(toc_ncx)
 
 	# Create EPUB zip
-	with zipfile.ZipFile(output_filename, "w") as epub:
+	with zipfile.ZipFile(epub_filepath, "w") as epub:
 		epub.write(temp_dir / "mimetype", "mimetype", compress_type=zipfile.ZIP_STORED)
 		for root, _, files in os.walk(temp_dir):
 			for file in files:
@@ -88,5 +88,5 @@ def create_epub_from_book(book, output_filename="froot.epub", title="The Book of
 				epub.write(full_path, str(rel_path), compress_type=zipfile.ZIP_DEFLATED)
 
 	shutil.rmtree(temp_dir)
-	print(f"EPUB created: {Path(output_filename).resolve()} ({len(book.chapters)} chapters)")
+	print(f"EPUB created: {Path(epub_filepath).resolve()} ({len(book.chapters)} chapters)")
 
