@@ -11,6 +11,7 @@ class FrootApp:
 		self.args = get_args()
 		self.root_url = self.args.url
 		self.uuid = create_uuid()
+		self.epub_filepath = self.args.output or "epubs/froot.epub"
 
 		self.container_selector = " ".join(self.args.container)
 		self.items_selector = " ".join(self.args.items) if self.args.items else "a"
@@ -63,9 +64,10 @@ class FrootApp:
 		# self.book.print_toc()
 
 	def export_book_as_epub(self):
-		self.book.export_epub()
+		self.book.export_epub(epub_filepath=self.epub_filepath)
 		self.debug(f"\t--- Title: {self.book.title}")
 		self.debug(f"\t--- Author: {self.book.author}")
+		self.debug(f"\t--- EPUB: {self.epub_filepath}")
 
 	def get_full_url(self, href):
 			return urljoin(self.root_url, href)

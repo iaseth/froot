@@ -36,7 +36,7 @@ class FrootBook:
 		for i, chapter in enumerate(self.chapters, start=1):
 			print(f"{i}. {chapter}")
 
-	def export_epub(self):
-		create_epub_from_book(self)
+	def export_epub(self, epub_filepath="froot.epub"):
+		create_epub_from_book(self, epub_filepath=epub_filepath)
 
 
