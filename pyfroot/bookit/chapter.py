@@ -9,6 +9,10 @@ class FrootChapter:
 		self.app = self.parent.app
 		self.uuid = create_uuid()
 
+		self.idx = 0
+		self.next = None
+		self.previous = None
+
 		self.href = self.a_tag['href']
 		self.title = self.a_tag.text.strip()
 		self.full_url = self.app.get_full_url(self.href)

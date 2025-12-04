@@ -5,6 +5,12 @@
 		<title>{{ chapter.title }}</title>
 	</head>
 	<body>
+		<header>
+			<h4>Chapter {{ chapter.idx + 1 }} / {{ chapter.parent.length }}</h4>
+			<h1>{{ chapter.title }}</h1>
+		</header>
+		<article>
 		{{ chapter.get_content() | safe }}
+		</article>
 	</body>
 </html>
