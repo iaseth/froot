@@ -44,7 +44,7 @@ def create_epub_from_book(book, epub_filepath="epubs/froot.epub", title="The Boo
 	(oebps_dir / "texts").mkdir(exist_ok=True)
 
 	for i, chapter in enumerate(book.chapters):
-		chapter_content = render_template("chapter.xhtml.j2", chapter=chapter)
+		chapter_content = render_template("chapter.xhtml.j2", book=book, chapter=chapter)
 		with open(oebps_dir / chapter.output_filepath, "w", encoding="utf-8") as f:
 			f.write(chapter_content)
 

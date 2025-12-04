@@ -1,3 +1,5 @@
+import os
+
 from ..utils import create_uuid
 
 
@@ -18,8 +20,12 @@ class FrootChapter:
 		self.full_url = self.app.get_full_url(self.href)
 
 	@property
+	def output_filename(self):
+		return f"{self.uuid}.html"
+
+	@property
 	def output_filepath(self):
-		return f"texts/{self.uuid}.html"
+		return os.path.join("texts", self.output_filename)
 
 	def get_content(self):
 		return "Foo is a Faa."

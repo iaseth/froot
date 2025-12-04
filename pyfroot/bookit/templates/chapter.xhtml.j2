@@ -6,7 +6,25 @@
 	</head>
 	<body>
 		<header>
-			<h4>Chapter {{ chapter.idx + 1 }} / {{ chapter.parent.length }}</h4>
+			<h4>
+				<span>{{ chapter.idx + 1 }} / {{ chapter.parent.length }}</span>
+
+				{% if chapter != book.first_chapter %}
+				<span>&bull; <a href="{{ book.first_chapter.output_filename }}">First</a></span>
+				{% endif %}
+
+				{% if chapter.previous %}
+				<span>&bull; <a href="{{ chapter.previous.output_filename }}">Previous</a></span>
+				{% endif %}
+
+				{% if chapter.next %}
+				<span>&bull; <a href="{{ chapter.next.output_filename }}">Next</a></span>
+				{% endif %}
+
+				{% if chapter != book.last_chapter %}
+				<span>&bull; <a href="{{ book.last_chapter.output_filename }}">Last</a></span>
+				{% endif %}
+			</h4>
 			<h1>{{ chapter.title }}</h1>
 		</header>
 		<article>
