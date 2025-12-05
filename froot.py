@@ -4,7 +4,7 @@ from pyfroot import froot
 
 
 def main():
-	froot.download()
+	froot.download_all_pages()
 	froot.export_book_as_epub()
 
 

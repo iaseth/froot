@@ -24,10 +24,7 @@ class FrootApp:
 		if self.args.debug:
 			print(*nargs, **kwargs)
 
-	def download(self):
-		self.debug(froot.args)
-		soup = get_soup(self.root_url)
-
+	def setup_meta_from_page_one(self, soup):
 		if self.args.title:
 			self.book.title = self.args.title
 		else:
@@ -42,6 +39,22 @@ class FrootApp:
 			meta_tag = meta_tag or soup.find("meta", attrs={"name": "twitter:site"})
 			if meta_tag:
 				self.book.author = meta_tag['content'].strip()
+
+	def download_all_pages(self):
+		for page_number in range(self.args.page_start, self.args.page_end + 1):
+			self.download_one_page(page_number)
+
+	def download_one_page(self, page_number):
+		if page_number == 1:
+			page_url = self.root_url
+		else:
+			page_url = "/".join([self.root_url, "page", str(page_number)])
+
+		print(f"Downloading {page_url} . . .")
+		soup = get_soup(page_url)
+
+		if page_number == 1:
+			self.setup_meta_from_page_one(soup)
 
 		body = soup.find("body")
 		if self.container_selector:
