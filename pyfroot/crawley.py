@@ -51,6 +51,8 @@ class Crawley:
 	async def _fetch(self, session, url: str) -> str:
 		"""Fetch a single URL, apply transform, write to cache."""
 		async with session.get(url) as resp:
+			if resp.status == 404:
+				return "404 Page Not Found"
 			resp.raise_for_status()
 			html = await resp.text()
 
