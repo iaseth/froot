@@ -70,6 +70,9 @@ class Crawley:
 			]
 			await asyncio.gather(*tasks)
 
+	def add_urls(self, urls):
+		self.urls = [*self.urls, *urls]
+
 	def download(self):
 		"""Public sync wrapper to download all URLs."""
 		asyncio.run(self._download_all())

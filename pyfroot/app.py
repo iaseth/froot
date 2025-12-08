@@ -20,6 +20,7 @@ class FrootApp:
 		self.article_selector = " ".join(self.args.article)
 
 		self.book = FrootBook(self)
+		self.crawler = Crawley([])
 
 	def debug(self, *nargs, **kwargs):
 		if self.args.debug:
@@ -46,7 +47,7 @@ class FrootApp:
 			self.download_one_page(page_number)
 
 		urls = [ch.full_url for ch in self.book.chapters]
-		self.crawler = Crawley(urls)
+		self.crawler.add_urls(urls)
 		self.crawler.download()
 
 	def download_one_page(self, page_number):
@@ -56,7 +57,7 @@ class FrootApp:
 			page_url = "/".join([self.root_url, "page", str(page_number)])
 
 		print(f"Downloading {page_url} . . .")
-		soup = get_soup(page_url)
+		soup = self.crawler.get_soup(page_url)
 
 		if page_number == 1:
 			self.setup_meta_from_page_one(soup)

@@ -3,7 +3,10 @@ import os
 from ..utils import create_uuid
 
 
-BAD_TAGS = ["iframe", "img", "audio", "video"]
+BAD_TAGS = [
+	"head", "link", "script", "style",
+	"iframe", "img", "audio", "video",
+]
 
 
 class FrootChapter:
