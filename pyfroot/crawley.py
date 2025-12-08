@@ -3,6 +3,11 @@ import asyncio
 import aiohttp
 import hashlib
 
+from bs4 import BeautifulSoup
+
+
+
+BAD_TAGS = ["audio", "video", "script", "style"]
 
 
 class Crawley:
@@ -32,9 +37,16 @@ class Crawley:
 		with open(self._cache_path(url), "r", encoding="utf-8") as f:
 			return f.read()
 
+	def _clean_html(self, html: str):
+		soup = BeautifulSoup(html, "lxml")
+		for tag_name in BAD_TAGS:
+			for tag in soup.find_all(tag_name):
+				tag.decompose()
+		return str(soup)
+
 	def _write_cache(self, url: str, html: str):
 		with open(self._cache_path(url), "w", encoding="utf-8") as f:
-			f.write(html)
+			f.write(self._clean_html(html))
 
 	async def _fetch(self, session, url: str) -> str:
 		"""Fetch a single URL, apply transform, write to cache."""
@@ -50,10 +62,11 @@ class Crawley:
 
 	async def _download_all(self):
 		"""Internal async downloader."""
+		urls = [url for url in self.urls if not self._is_cached(url)]
 		async with aiohttp.ClientSession() as session:
 			tasks = [
 				asyncio.create_task(self._fetch(session, url))
-				for url in self.urls
+				for url in urls
 			]
 			await asyncio.gather(*tasks)
 
@@ -75,5 +88,9 @@ class Crawley:
 				return await self._fetch(session, url)
 
 		return asyncio.run(fetch_one())
+
+	def get_soup(self, url: str):
+		soup = BeautifulSoup(self.get(url), "lxml")
+		return soup
 
 

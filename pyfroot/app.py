@@ -2,6 +2,7 @@ from urllib.parse import urljoin
 
 from .args import get_args
 from .bookit import FrootBook
+from .crawley import Crawley
 from .utils import create_uuid, get_soup
 
 
@@ -43,6 +44,10 @@ class FrootApp:
 	def download_all_pages(self):
 		for page_number in range(self.args.page_start, self.args.page_end + 1):
 			self.download_one_page(page_number)
+
+		urls = [ch.full_url for ch in self.book.chapters]
+		self.crawler = Crawley(urls)
+		self.crawler.download()
 
 	def download_one_page(self, page_number):
 		if page_number == 1:
@@ -93,8 +98,7 @@ class FrootApp:
 			return urljoin(self.root_url, href)
 
 	def get_article_content_soup(self, full_url):
-		self.debug(f"\t--- Fetching {full_url} . . .")
-		article_soup = get_soup(full_url)
+		article_soup = self.crawler.get_soup(full_url)
 		article_content = article_soup.select_one(self.article_selector)
 		return article_content
 
