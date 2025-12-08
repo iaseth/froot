@@ -43,10 +43,13 @@ def create_epub_from_book(book, epub_filepath="froot.epub"):
 	oebps_dir = temp_dir / "OEBPS"
 	(oebps_dir / "texts").mkdir(exist_ok=True)
 
-	for i, chapter in enumerate(book.chapters):
+	for i, chapter in enumerate(book.chapters, start=1):
 		chapter_content = render_template("chapter.xhtml.j2", book=book, chapter=chapter)
+		filepath = oebps_dir / chapter.output_filepath
 		with open(oebps_dir / chapter.output_filepath, "w", encoding="utf-8") as f:
 			f.write(chapter_content)
+		print(f"\r\t--- Saved Chapter {i}/{book.length}: {filepath}", end="")
+	print()
 
 	# Add inline toc
 	content_opf = render_template(
@@ -54,24 +57,30 @@ def create_epub_from_book(book, epub_filepath="froot.epub"):
 		page_title="Table of Contents",
 		book=book
 	)
-	with open(oebps_dir / "inline_toc.xhtml", "w", encoding="utf-8") as f:
+	inline_toc_path = oebps_dir / "inline_toc.xhtml"
+	with open(inline_toc_path, "w", encoding="utf-8") as f:
 		f.write(content_opf)
+	print(f"\t--- Saved inline ToC: {inline_toc_path}")
 
 	# Write OPF
 	content_opf = render_template(
 		"content.opf.j2",
 		book=book
 	)
-	with open(oebps_dir / "content.opf", "w", encoding="utf-8") as f:
+	content_opf_path = oebps_dir / "content.opf"
+	with open(content_opf_path, "w", encoding="utf-8") as f:
 		f.write(content_opf)
+	print(f"\t--- Saved content opf: {content_opf_path}")
 
 	# Write NCX
 	toc_ncx = render_template(
 		"toc.ncx.j2",
 		book=book
 	)
-	with open(oebps_dir / "toc.ncx", "w", encoding="utf-8") as f:
+	toc_ncx_path = oebps_dir / "toc.ncx"
+	with open(toc_ncx_path, "w", encoding="utf-8") as f:
 		f.write(toc_ncx)
+	print(f"\t--- Saved toc ncx: {toc_ncx_path}")
 
 	# Create EPUB zip
 	with zipfile.ZipFile(epub_filepath, "w") as epub:

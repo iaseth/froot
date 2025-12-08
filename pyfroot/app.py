@@ -3,7 +3,7 @@ from urllib.parse import urljoin
 from .args import get_args
 from .bookit import FrootBook
 from .crawley import Crawley
-from .utils import create_uuid, get_soup
+from .utils import create_uuid
 
 
 
