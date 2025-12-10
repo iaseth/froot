@@ -69,7 +69,8 @@ class FrootApp:
 			container = body
 		items = container.select(self.items_selector)
 
-		if self.args.limit:
+		if self.args.limit and len(items) > self.args.limit:
+			print(f"\t--- Limiting {len(items)} items to {self.args.limit}")
 			items = items[:self.args.limit]
 
 		for i, item in enumerate(items, start=1):
@@ -82,7 +83,8 @@ class FrootApp:
 			else:
 				a_tag = item.find("a")
 
-			self.book.create_chapter(a_tag)
+			if a_tag.has_attr('href'):
+				self.book.create_chapter(a_tag)
 			# break
 		# self.book.print_toc()
 
