@@ -1,5 +1,6 @@
 from .chapter import FrootChapter
 from .epub import create_epub_from_book
+from .latex import create_tex_from_book
 from ..utils import create_uuid
 
 
@@ -38,5 +39,8 @@ class FrootBook:
 
 	def export_epub(self, epub_filepath="froot.epub"):
 		create_epub_from_book(self, epub_filepath=epub_filepath)
+
+	def export_tex(self, tex_filepath="froot.tex"):
+		create_tex_from_book(self, tex_filepath)
 
 
