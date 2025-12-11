@@ -42,6 +42,8 @@ def create_tex_from_book(book, tex_filepath="froot.tex"):
 		format=formats[0],
 		metadata=metadata
 	)
-	print(tex)
+	with open(tex_filepath, "w") as f:
+		f.write(tex)
+	print(f"Saved: {tex_filepath}")
 
 

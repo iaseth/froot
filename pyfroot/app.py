@@ -98,7 +98,7 @@ class FrootApp:
 			print(f"\t--- Not found any chapters!")
 
 	def export_book_as_tex(self):
-		self.book.export_tex()
+		self.book.export_tex(tex_filepath="temp/froot.tex")
 
 	def get_full_url(self, href):
 			return urljoin(self.root_url, href)

@@ -1,5 +1,6 @@
 import os
 
+from .utils import minify_soup
 from ..utils import create_uuid
 
 
@@ -44,7 +45,7 @@ class FrootChapter:
 		for tag in soup.find_all(True):
 			tag.attrs = {}
 
-		return soup
+		return minify_soup(soup)
 
 	def __str__(self):
 		return f"Chapter - {self.title} ({self.href})"
