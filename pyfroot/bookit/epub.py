@@ -5,6 +5,8 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
 
+from .utils import log
+
 
 
 TEMPLATE_DIR = Path(__file__).parent / "templates"
@@ -48,7 +50,7 @@ def create_epub_from_book(book, epub_filepath="froot.epub"):
 		filepath = oebps_dir / chapter.output_filepath
 		with open(oebps_dir / chapter.output_filepath, "w", encoding="utf-8") as f:
 			f.write(chapter_content)
-		print(f"\r\t--- Saved Chapter {i}/{book.length}: {filepath}", end="")
+		log(f"Saved Chapter {i}/{book.length}: {filepath}", level=2, same_line=True)
 	print()
 
 	# Add inline toc
@@ -60,7 +62,7 @@ def create_epub_from_book(book, epub_filepath="froot.epub"):
 	inline_toc_path = oebps_dir / "inline_toc.xhtml"
 	with open(inline_toc_path, "w", encoding="utf-8") as f:
 		f.write(content_opf)
-	print(f"\t--- Saved inline ToC: {inline_toc_path}")
+	log(f"Saved inline ToC: {inline_toc_path}", level=2)
 
 	# Write OPF
 	content_opf = render_template(
@@ -70,7 +72,7 @@ def create_epub_from_book(book, epub_filepath="froot.epub"):
 	content_opf_path = oebps_dir / "content.opf"
 	with open(content_opf_path, "w", encoding="utf-8") as f:
 		f.write(content_opf)
-	print(f"\t--- Saved content opf: {content_opf_path}")
+	log(f"Saved content opf: {content_opf_path}", level=2)
 
 	# Write NCX
 	toc_ncx = render_template(
@@ -80,7 +82,7 @@ def create_epub_from_book(book, epub_filepath="froot.epub"):
 	toc_ncx_path = oebps_dir / "toc.ncx"
 	with open(toc_ncx_path, "w", encoding="utf-8") as f:
 		f.write(toc_ncx)
-	print(f"\t--- Saved toc ncx: {toc_ncx_path}")
+	log(f"Saved toc ncx: {toc_ncx_path}", level=2)
 
 	# Create EPUB zip
 	with zipfile.ZipFile(epub_filepath, "w") as epub:
@@ -94,5 +96,5 @@ def create_epub_from_book(book, epub_filepath="froot.epub"):
 				epub.write(full_path, str(rel_path), compress_type=zipfile.ZIP_DEFLATED)
 
 	shutil.rmtree(temp_dir)
-	print(f"EPUB created: {Path(epub_filepath).resolve()} ({len(book.chapters)} chapters)")
+	log(f"EPUB created: {Path(epub_filepath).resolve()} ({len(book.chapters)} chapters)")
 

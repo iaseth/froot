@@ -2,6 +2,7 @@ from urllib.parse import urljoin
 
 from .args import get_args
 from .bookit import FrootBook
+from .bookit.utils import log
 from .crawley import Crawley
 from .utils import create_uuid
 
@@ -70,7 +71,7 @@ class FrootApp:
 		items = container.select(self.items_selector)
 
 		if self.args.limit and len(items) > self.args.limit:
-			print(f"\t--- Limiting {len(items)} items to {self.args.limit}")
+			log(f"Limiting {len(items)} items to {self.args.limit}")
 			items = items[:self.args.limit]
 
 		for i, item in enumerate(items, start=1):
@@ -91,11 +92,11 @@ class FrootApp:
 	def export_book_as_epub(self):
 		if self.book.chapters:
 			self.book.export_epub(epub_filepath=self.epub_filepath)
-			self.debug(f"\t--- Title: {self.book.title}")
-			self.debug(f"\t--- Author: {self.book.author}")
-			self.debug(f"\t--- EPUB: {self.epub_filepath}")
+			log(f"Title: {self.book.title}", level=2)
+			log(f"Author: {self.book.author}", level=2)
+			log(f"EPUB: {self.epub_filepath}")
 		else:
-			print(f"\t--- Not found any chapters!")
+			log(f"Not found any chapters!")
 
 	def export_book_as_tex(self):
 		self.book.export_tex(tex_filepath="temp/froot.tex")

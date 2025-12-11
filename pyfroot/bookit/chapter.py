@@ -6,6 +6,7 @@ from ..utils import create_uuid
 
 BAD_TAGS = [
 	"head", "link", "script", "style",
+	"button",
 	"iframe", "img", "audio", "video",
 ]
 
