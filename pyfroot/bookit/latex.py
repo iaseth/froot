@@ -39,7 +39,7 @@ metadata = json.load(open("metadata.json"))
 def create_tex_from_book(book, tex_filepath="froot.tex"):
 	tex = master_tex_template.render(
 		book=book,
-		format=formats[0],
+		format=formats[2],
 		metadata=metadata
 	)
 	with open(tex_filepath, "w") as f:

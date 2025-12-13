@@ -1,5 +1,7 @@
 import os
 
+import pypandoc
+
 from .utils import minify_soup
 from ..utils import create_uuid
 
@@ -47,6 +49,11 @@ class FrootChapter:
 			tag.attrs = {}
 
 		return minify_soup(soup)
+
+	def get_content_tex(self):
+		html = self.get_content()
+		latex = pypandoc.convert_text(html, to="latex", format="html")
+		return latex
 
 	def __str__(self):
 		return f"Chapter - {self.title} ({self.href})"
